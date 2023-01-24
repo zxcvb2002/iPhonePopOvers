@@ -9,9 +9,76 @@ import SwiftUI
 
 struct Home: View {
     /// - View Properites
+
+    @State private var ifUp: Bool = false
+    @State private var ifDown: Bool = false
+    @State private var ifLeft: Bool = false
+    @State private var ifRight: Bool = false
+    
+    @State private var ifWhite: Bool = false
+    @State private var ifRed: Bool = false
+    @State private var ifBlue: Bool = false
+    @State private var ifOrange: Bool = false
+    
     @State private var showPopover: Bool = false
     @State private var updateText: Bool = false
+    
     var body: some View {
+        List {
+            Section/*(header: Text("Arrow Direction"))*/ {
+                ScrollView(.horizontal/*, showsIndicators: false*/) {
+                    HStack(spacing: 20) {
+                        ForEach(0..<1) {index in
+                            Button("Up") {
+                                ifUp.toggle()
+                            }
+                            Button("Down") {
+                                ifDown.toggle()
+                            }
+                            Button("Left") {
+                                ifLeft.toggle()
+                            }
+                            Button("Right") {
+                                ifRight.toggle()
+                            }
+                        }
+                    }
+                }
+                .listRowInsets(.init(top: 0, leading: 87.5, bottom: 0, trailing: 50))
+                //.clipped()
+            } header: {
+                Text("Arrow Direction")
+            }
+            .listRowInsets(.init(top: 0, leading: 25, bottom: 0, trailing: 25))
+            
+            Section /*(header: Text("Background"))*/ {
+                ScrollView(.horizontal/*, showsIndicators: false*/) {
+                    HStack(spacing: 20) {
+                        ForEach(0..<1) { index in
+                            Button("Default") {
+                                ifWhite.toggle()
+                            }
+                            Button("Red") {
+                                ifRed.toggle()
+                            }
+                            Button("Blue") {
+                                ifBlue.toggle()
+                            }
+                            Button("Orange") {
+                                ifOrange.toggle()
+                            }
+                        }
+                    }
+                }
+                .listRowInsets(.init(top: 0, leading: 87.5, bottom: 0, trailing: 50))
+                //.clipped()
+            } header: {
+                Text("Background")
+            }
+            .listRowInsets(.init(top: 0, leading: 25, bottom: 0, trailing: 25))
+            
+        }
+        
         Button("Show Popover") {
             showPopover.toggle()
         }
@@ -25,14 +92,31 @@ struct Home: View {
                     showPopover.toggle()
                 }
             } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
-            //foregroundColor(.white)
+            //foregroundColor(.white) - MARK: Error
             .padding(15)
             .frame(width: 250/*225*/)
             /// - You can also Give Full Popover Color like this
             .background {
-                Rectangle()
-                    .fill(.red/*.blue*//*.orange*/.gradient)
-                    .padding(-20)
+                if ifWhite {
+                    Rectangle()
+                        .fill(.white.gradient)
+                        .padding(-20)
+                }
+                if ifRed {
+                    Rectangle()
+                        .fill(.red.gradient)
+                        .padding(-20)
+                }
+                if ifBlue {
+                    Rectangle()
+                        .fill(.blue.gradient)
+                        .padding(-20)
+                }
+                if ifOrange {
+                    Rectangle()
+                        .fill(.orange.gradient)
+                        .padding(-20)
+                }
             }
         }
     }
