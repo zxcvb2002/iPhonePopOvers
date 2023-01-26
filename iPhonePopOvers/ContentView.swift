@@ -19,8 +19,7 @@ import SwiftUI
  struct ContentView: View {
      var body: some View {
          NavigationStack {
-             Home()
-                 .navigationTitle("iOS Popovers")
+             Home().navigationTitle("iOS Popovers")
          }
      }
  }

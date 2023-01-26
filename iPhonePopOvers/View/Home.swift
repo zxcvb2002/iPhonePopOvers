@@ -26,7 +26,7 @@ struct Home: View {
     var body: some View {
         List {
             Section/*(header: Text("Arrow Direction"))*/ {
-                ScrollView(.horizontal/*, showsIndicators: false*/) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         ForEach(0..<1) {index in
                             Button("Up") {
@@ -49,7 +49,7 @@ struct Home: View {
             } header: {
                 Text("Arrow Direction")
             }
-            .listRowInsets(.init(top: 0, leading: 25, bottom: 0, trailing: 25))
+            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 25))
             
             Section /*(header: Text("Background"))*/ {
                 ScrollView(.horizontal/*, showsIndicators: false*/) {
@@ -64,6 +64,7 @@ struct Home: View {
                             Button("Blue") {
                                 ifBlue.toggle()
                             }
+                            
                             Button("Orange") {
                                 ifOrange.toggle()
                             }
@@ -75,7 +76,7 @@ struct Home: View {
             } header: {
                 Text("Background")
             }
-            .listRowInsets(.init(top: 0, leading: 25, bottom: 0, trailing: 25))
+            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 25))
             
         }
         
@@ -102,17 +103,17 @@ struct Home: View {
                         .fill(.white.gradient)
                         .padding(-20)
                 }
-                if ifRed {
+                else if ifRed {
                     Rectangle()
                         .fill(.red.gradient)
                         .padding(-20)
                 }
-                if ifBlue {
+                else if ifBlue {
                     Rectangle()
                         .fill(.blue.gradient)
                         .padding(-20)
                 }
-                if ifOrange {
+                else if ifOrange {
                     Rectangle()
                         .fill(.orange.gradient)
                         .padding(-20)
