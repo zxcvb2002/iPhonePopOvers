@@ -9,7 +9,8 @@ import SwiftUI
 
 struct Home: View {
     /// - View Properites
-
+    
+    /*
     @State private var ifUp: Bool = false
     @State private var ifDown: Bool = false
     @State private var ifLeft: Bool = false
@@ -19,12 +20,78 @@ struct Home: View {
     @State private var ifRed: Bool = false
     @State private var ifBlue: Bool = false
     @State private var ifOrange: Bool = false
+    */
+    
     
     @State private var showPopover: Bool = false
     @State private var updateText: Bool = false
     
+    var directions = ["Up", "Down", "Left", "Right"]
+    @State private var selectedDirection = 0
+    
+    var colors = ["Default", "Red", "Blue", "Orange"]
+    @State private var selectedColor = 0
+    
     var body: some View {
-        List {
+        
+        List{
+            Section {
+                VStack {
+                    Picker("pick direction", selection: $selectedDirection) {
+                        ForEach(0..<directions.count) {
+                            Text(self.directions[$0])
+                        }
+                    }
+                    // Text("You Picked \(directions[selectedDirection])")
+                }
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .pickerStyle(SegmentedPickerStyle())
+            } header: {
+                Text("Arrow Direction")
+            }
+            
+            Section {
+                VStack {
+                    Picker("pick color", selection: $selectedColor) {
+                        ForEach(0..<colors.count) {
+                            Text(self.colors[$0])
+                        }
+                    }
+                    // Text("You Picked \(colors[selectedColor])")
+                }
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .pickerStyle(SegmentedPickerStyle())
+            } header: {
+                Text("Background")
+            }
+            
+            Button("Show Popover") {
+                showPopover.toggle()
+            }
+            .iOSPopover(isPresented: $showPopover, arrowDirection: .down) {
+                VStack(spacing: 12) {
+                    Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
+                    Button("Update Text") {
+                        updateText.toggle()
+                    }
+                    Button("Close Popover") {
+                        showPopover.toggle()
+                    }
+                } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
+                //foregroundColor(.white) - MARK: Error
+                .padding(15)
+                .frame(width: 250/*225*/)
+                /// - You can also Give Full Popover Color like this
+                .background {
+                    Rectangle()
+                        .fill(.clear.gradient)
+                        .padding(-20)
+                }
+            }
+        }
+        .scrollContentBackground(.hidden)
+        
+        /*List {
             Section/*(header: Text("Arrow Direction"))*/ {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
@@ -72,54 +139,54 @@ struct Home: View {
                     }
                 }
                 .listRowInsets(.init(top: 0, leading: 87.5, bottom: 0, trailing: 50))
-                //.clipped()
             } header: {
                 Text("Background")
             }
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 25))
             
-        }
-        
-        Button("Show Popover") {
-            showPopover.toggle()
-        }
-        .iOSPopover(isPresented: $showPopover, arrowDirection: .down) {
-            VStack(spacing: 12) {
-                Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
-                Button("Update Text") {
-                    updateText.toggle()
-                }
-                Button("Close Popover") {
-                    showPopover.toggle()
-                }
-            } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
-            //foregroundColor(.white) - MARK: Error
-            .padding(15)
-            .frame(width: 250/*225*/)
-            /// - You can also Give Full Popover Color like this
-            .background {
-                if ifWhite {
-                    Rectangle()
-                        .fill(.white.gradient)
-                        .padding(-20)
-                }
-                else if ifRed {
-                    Rectangle()
-                        .fill(.red.gradient)
-                        .padding(-20)
-                }
-                else if ifBlue {
-                    Rectangle()
-                        .fill(.blue.gradient)
-                        .padding(-20)
-                }
-                else if ifOrange {
-                    Rectangle()
-                        .fill(.orange.gradient)
-                        .padding(-20)
+            /*}*/
+            
+            Button("Show Popover") {
+                showPopover.toggle()
+            }
+            .iOSPopover(isPresented: $showPopover, arrowDirection: .down) {
+                VStack(spacing: 12) {
+                    Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
+                    Button("Update Text") {
+                        updateText.toggle()
+                    }
+                    Button("Close Popover") {
+                        showPopover.toggle()
+                    }
+                } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
+                //foregroundColor(.white) - MARK: Error
+                .padding(15)
+                .frame(width: 250/*225*/)
+                /// - You can also Give Full Popover Color like this
+                .background {
+                    if ifWhite {
+                        Rectangle()
+                            .fill(.white.gradient)
+                            .padding(-20)
+                    }
+                    else if ifRed {
+                        Rectangle()
+                            .fill(.red.gradient)
+                            .padding(-20)
+                    }
+                    else if ifBlue {
+                        Rectangle()
+                            .fill(.blue.gradient)
+                            .padding(-20)
+                    }
+                    else if ifOrange {
+                        Rectangle()
+                            .fill(.orange.gradient)
+                            .padding(-20)
+                    }
                 }
             }
-        }
+        }*/
     }
 }
 
