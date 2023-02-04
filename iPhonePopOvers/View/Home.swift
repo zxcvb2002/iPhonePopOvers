@@ -9,16 +9,26 @@ import SwiftUI
 
 struct Home: View {
     /// - View Properites
-
+    
+    @State private var arrowDirectionIndex = 0
+    
+    var arrowDirection: UIPopoverArrowDirection {
+        switch arrowDirectionIndex {
+            case 1:
+                return .up
+            case 2:
+                return .right
+            case 3:
+                return .left
+            default:
+                return .down
+        }
+    }
+    
     @State private var showPopover: Bool = false
     @State private var updateText: Bool = false
     
-    /*
-    var directions = ["Up", "Down", "Left", "Right"]
-    @State private var selectedDirection = 0
-    */
-    
-    enum Colors: String, CaseIterable, Identifiable {
+    enum Color: String, CaseIterable, Identifiable {
         case Default
         case Red
         case Blue
@@ -27,51 +37,34 @@ struct Home: View {
         var id: String { self.rawValue }
     }
     
-    @State private var selectedColor = Colors.Default
+    @State private var selectedColor = Color.Default
     
     var body: some View {
         
         List{
-            
-            /*
             Section {
                 VStack {
-                    Picker("pick direction", selection: $selectedDirection) {
-                        ForEach(0..<directions.count) {
-                            Text(self.directions[$0])
-                        }
+                    Picker("Arrow Direction", selection: $arrowDirectionIndex) {
+                        Text("Up").tag(0)
+                        Text("Down").tag(1)
+                        Text("Left").tag(2)
+                        Text("Right").tag(3)
                     }
-                    // Text("You Picked \(directions[selectedDirection])")
+                    .pickerStyle(.segmented)
                 }
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .pickerStyle(SegmentedPickerStyle())
             } header: {
                 Text("Arrow Direction")
             }
-            */
-            
+        
             Section {
-                /*
-                VStack {
-                    Picker("pick color", selection: $selectedColor) {
-                        ForEach(0..<colors.count) {
-                            Text(self.colors[$0])
-                        }
-                    }
-                    // Text("You Picked \(colors[selectedColor])")
-                }
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .pickerStyle(SegmentedPickerStyle())
-                */
                 VStack {
                     Picker("Color", selection: $selectedColor) {
-                        ForEach(Colors.allCases) { color in
+                        ForEach(Color.allCases) { color in
                             Text(color.rawValue)
                                 .tag(color)
                         }
                     }
                     .pickerStyle(.segmented)
-                    Text("Selected color: \(selectedColor.rawValue)")
                 }
             } header: {
                 Text("Background")
@@ -80,7 +73,7 @@ struct Home: View {
             Button("Show Popover") {
                 showPopover.toggle()
             }
-            .iOSPopover(isPresented: $showPopover, arrowDirection: .down) {
+            .iOSPopover(isPresented: $showPopover, arrowDirection: arrowDirection/*.down*/) {
                 VStack(spacing: 12) {
                     Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
                     Button("Update Text") {
@@ -90,14 +83,14 @@ struct Home: View {
                         showPopover.toggle()
                     }
                 } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
-                //foregroundColor(.white) - MARK: Error
+                // .foregroundColor(.white) // MARK: Error
                 .padding(15)
                 .frame(width: 250/*225*/)
                 /// - You can also Give Full Popover Color like this
                 .background {
                     if selectedColor.rawValue == "Default" {
                         Rectangle()
-                            .fill(.white.gradient)
+                            .fill(.clear.gradient)
                             .padding(-20)
                     }
                     else if selectedColor.rawValue == "Red" {
@@ -105,12 +98,12 @@ struct Home: View {
                             .fill(.red.gradient)
                             .padding(-20)
                     }
-                    else if selectedColor.rawValue == "Blue" {
+                    else if selectedColor.rawValue == "Green" {
                         Rectangle()
                             .fill(.blue.gradient)
                             .padding(-20)
                     }
-                    else if selectedColor.rawValue == "Orange" {
+                    else if selectedColor.rawValue == "Blue" {
                         Rectangle()
                             .fill(.orange.gradient)
                             .padding(-20)
@@ -118,7 +111,7 @@ struct Home: View {
                 }
             }
         }
-        .scrollContentBackground(.hidden)
+        .scrollContentBackground(.hidden) // MARK: Error
     }
 }
 
