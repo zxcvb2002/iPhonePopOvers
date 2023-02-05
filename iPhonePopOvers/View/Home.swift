@@ -73,6 +73,7 @@ struct Home: View {
             Button("Show Popover") {
                 showPopover.toggle()
             }
+            .foregroundColor(.black)
             .iOSPopover(isPresented: $showPopover, arrowDirection: arrowDirection/*.down*/) {
                 VStack(spacing: 12) {
                     Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
@@ -83,14 +84,14 @@ struct Home: View {
                         showPopover.toggle()
                     }
                 } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
-                // .foregroundColor(.white) // MARK: Error
+                .foregroundColor(.black) // MARK: Error
                 .padding(15)
                 .frame(width: 250/*225*/)
                 /// - You can also Give Full Popover Color like this
                 .background {
                     if selectedColor.rawValue == "Default" {
                         Rectangle()
-                            .fill(.clear.gradient)
+                            .fill(.white.gradient)
                             .padding(-20)
                     }
                     else if selectedColor.rawValue == "Red" {
@@ -98,12 +99,12 @@ struct Home: View {
                             .fill(.red.gradient)
                             .padding(-20)
                     }
-                    else if selectedColor.rawValue == "Green" {
+                    else if selectedColor.rawValue == "Blue" {
                         Rectangle()
                             .fill(.blue.gradient)
                             .padding(-20)
                     }
-                    else if selectedColor.rawValue == "Blue" {
+                    else if selectedColor.rawValue == "Orange" {
                         Rectangle()
                             .fill(.orange.gradient)
                             .padding(-20)
