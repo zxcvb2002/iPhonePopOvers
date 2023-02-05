@@ -41,42 +41,50 @@ struct Home: View {
     
     var body: some View {
         
-        List{
-            Section {
-                VStack {
-                    Picker("Arrow Direction", selection: $arrowDirectionIndex) {
-                        Text("Up").tag(0)
-                        Text("Down").tag(1)
-                        Text("Left").tag(2)
-                        Text("Right").tag(3)
-                    }
-                    .pickerStyle(.segmented)
+        Section {
+            VStack {
+                Picker("Arrow Direction", selection: $arrowDirectionIndex) {
+                    Text("Up").tag(0)
+                    Text("Down").tag(1)
+                    Text("Left").tag(2)
+                    Text("Right").tag(3)
                 }
-            } header: {
-                Text("Arrow Direction")
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 15)
             }
-        
-            Section {
-                VStack {
-                    Picker("Color", selection: $selectedColor) {
-                        ForEach(Color.allCases) { color in
-                            Text(color.rawValue)
-                                .tag(color)
-                        }
+        } header: {
+            Text("Arrow Direction")
+                .offset(x: -127.5)
+                .foregroundColor(.gray)
+        }
+        .offset(x: 0, y: -250)
+    
+        Section {
+            VStack {
+                Picker("Color", selection: $selectedColor) {
+                    ForEach(Color.allCases) { color in
+                        Text(color.rawValue)
+                            .tag(color)
                     }
-                    .pickerStyle(.segmented)
                 }
-            } header: {
-                Text("Background")
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 15)
             }
+        } header: {
+            Text("Background")
+                .offset(x: -140)
+                .foregroundColor(.gray)
+        }
+        .offset(x: 0, y: -245)
             
+        Section {
             Button("Show Popover") {
                 showPopover.toggle()
             }
-            .foregroundColor(.black)
-            .iOSPopover(isPresented: $showPopover, arrowDirection: arrowDirection/*.down*/) {
+            .foregroundColor(.gray)
+            .iOSPopover(isPresented: $showPopover, arrowDirection: arrowDirection) {
                 VStack(spacing: 12) {
-                    Text("Hello, it's me, \(updateText ? "Updated Popover" : "Popover").")
+                    Text("\(updateText ? "Updated Popover" : "Popover") Text.")
                     Button("Update Text") {
                         updateText.toggle()
                     }
@@ -84,9 +92,9 @@ struct Home: View {
                         showPopover.toggle()
                     }
                 } /// - Console Log : It's simply trying to present the popover again, avoiding that, and updating the view when the SwiftUI has been updated.
-                .foregroundColor(.black) // MARK: Error
+                .foregroundColor(.black)
                 .padding(15)
-                .frame(width: 250/*225*/)
+                .frame(width: 225)
                 /// - You can also Give Full Popover Color like this
                 .background {
                     if selectedColor.rawValue == "Default" {
@@ -111,8 +119,7 @@ struct Home: View {
                     }
                 }
             }
-        }
-        .scrollContentBackground(.hidden) // MARK: Error
+        }.offset(x: 0, y: -210)
     }
 }
 
